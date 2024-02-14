@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+}
+header{
+    background: #999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo img{
+    width: 5rem;
+    padding: 0 1rem;
+}
+nav{
+    padding: 1rem;
+}
+.motto{
+    font-style: italic;
+    font-size: 1rem;
+}
+@media screen and (width < 500px) {
+    header{
+        flex-direction: column;
+    }
+}
