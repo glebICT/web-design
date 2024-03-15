@@ -1,11 +1,18 @@
 body{
     margin: 0;
 }
-header{
+header,footer{
     background: #999;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+main{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem auto;
+    gap: 1rem;
 }
 .logo img{
     width: 5rem;
@@ -17,6 +24,16 @@ nav{
 .motto{
     font-style: italic;
     font-size: 1rem;
+}
+article{
+    border: 1px solid gray;
+    display: flex;
+}
+article picture img{
+    max-width: 400px;
+}
+article .content{
+    display: block;
 }
 @media screen and (width < 500px) {
     header{
