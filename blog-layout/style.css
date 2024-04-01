@@ -1,5 +1,6 @@
 body{
     margin: 0;
+    background: goldenrod;
 }
 header,footer{
     background: #999;
@@ -28,6 +29,7 @@ nav{
 article{
     border: 1px solid gray;
     display: flex;
+    gap: 1rem;
 }
 article picture img{
     max-width: 400px;
