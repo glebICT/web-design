@@ -1,6 +1,10 @@
 body{
     margin: 0;
     background: goldenrod;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 header,footer{
     background: #999;
