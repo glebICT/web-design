@@ -1,0 +1,51 @@
+html{
+    display: flex;
+}
+body{
+    font-family: Verdana;
+    margin-right: 300px;
+    margin: auto;
+    margin-left: 50px;
+    max-width: 90ch;
+    background: #fdf5e6;
+    background-image: url('https://www.example.com/old-paper-texture.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+h1, h2{
+    font-family: fantasy;
+    text-align: center;
+}
+pre{
+    text-align: right;
+}
+.poem{
+    font-family: cursive;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+}
+h4{
+    text-align: right;
+    color: gray ;
+}
+p{
+    color: gray;
+    &:hover{
+        color: black
+    };
+}
+#toc{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #f8f8f8;
+    border-left: 1px solid #e7e7e7;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
