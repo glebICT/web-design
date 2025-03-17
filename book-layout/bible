@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .bible-chapters {
+            counter-reset: chapter;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                counter-increment: chapter;
+                margin-bottom: 20px;
+
+                .bible-verses {
+                    counter-reset: verse;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+
+                    li {
+                        counter-increment: verse;
+                        margin-bottom: 10px;
+
+                        &::before {
+                            content: counter(chapter) ":" counter(verse);
+                            font-weight: bold;
+                            margin-right: 5px;
+                            display: inline-block;
+                        }
+                    }
+                }
+
+                &::before {
+                    content: " Chapter " counter(chapter);
+                    font-weight: bold;
+                    font-size: 1.2em;
+                    margin-bottom: 10px;
+                    display: block;
+                }
+
+            }
+        }
+
+
+
+        .footnote {
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <ol class="bible-chapters">
+        <h2>Genesis</h2>
+        <li>
+            <p>God createth Heaven and Earth, and all things therein, in six days.</p>
+            <ol class="bible-verses">
+                <li>In the beginning God created heaven, and earth.</li>
+                <li>And the earth was void and empty, and darkness was upon the face of the deep; and the spirit of God
+                    moved over the waters.</li>
+                <li>And God said: Be light made. And light was made.</li>
+                <li>And God saw the light that it was good; and he divided the light from the darkness.</li>
+                <li>And he called the light Day, and the darkness Night; and there was evening and morning one day.</li>
+                <li>And God said: Let there be a <span class="footnote"
+                        title="A firmament.... By this name is here understood the whole space between the earth, and the highest stars. The lower part of which divideth the waters that are upon the earth, from those that are above in the clouds.">firmament</span>
+                    made amidst the waters: and let it divide the waters from the waters.</li>
+                  <li>...</li>
+            </ol>
+        </li>
+        <li>
+            <p>God resteth on the seventh day and blesseth it. The earthly paradise, in which God placeth man. He
+                commandeth him not to eat of the tree of knowledge. And formeth a woman of his rib.</p>
+            <ol class="bible-verses">
+                <li>So the heavens and the earth were finished, and all the furniture of them.</li>
+                <li>And on the seventh day God ended his work which he had made: and he rested on the seventh day from
+                    all his work which he had done.</li>
+                     <li>...</li>
+            </ol>
+        </li>
+    </ol>
+    <!-- https://www.gutenberg.org/cache/epub/1581/pg1581-images.html -->
+    <!-- https://ajbodev.github.io/Bible.html#/1/1 -->
+</body>
+
+</html>
