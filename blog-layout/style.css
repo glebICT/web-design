@@ -12,6 +12,11 @@ header,footer{
     justify-content: space-between;
     align-items: center;
 }
+footer{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+}
 main{
     width: 80%;
     display: flex;
