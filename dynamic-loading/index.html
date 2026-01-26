@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Loading with Fetch API - Educational Example</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dynamic Item Loading Examples</h1>
+        <p class="subtitle">Demonstrating fetch, promises, and loading states</p>
+        
+        <!-- Example 1: Simple Spinner -->
+        <section class="example-section">
+            <h2>1. Basic Spinner Loader</h2>
+            <button id="load-users-btn" class="btn">Load Users Data</button>
+            <div id="users-container" class="items-container">
+                <div id="users-spinner" class="spinner hidden"></div>
+                <div id="users-content"></div>
+            </div>
+        </section>
+
+        <!-- Example 2: Progress Bar -->
+        <section class="example-section">
+            <h2>2. Progress Bar Loader</h2>
+            <button id="load-posts-btn" class="btn">Load Posts Data</button>
+            <div class="progress-container">
+                <div id="posts-progress" class="progress-bar hidden">
+                    <div class="progress-fill"></div>
+                </div>
+                <span id="progress-text" class="progress-text"></span>
+            </div>
+            <div id="posts-container" class="items-container"></div>
+        </section>
+
+        <!-- Example 3: Skeleton Loading -->
+        <section class="example-section">
+            <h2>3. Skeleton Screen Loader</h2>
+            <button id="load-photos-btn" class="btn">Load Photos Data</button>
+            <div id="photos-container" class="items-container">
+                <!-- Skeleton will be shown here during loading -->
+            </div>
+        </section>
+
+        <!-- Example 4: Multiple Simultaneous Requests -->
+        <section class="example-section">
+            <h2>4. Parallel Requests with Promise.all()</h2>
+            <button id="load-all-btn" class="btn">Load All Data Simultaneously</button>
+            <div id="all-spinner" class="spinner hidden"></div>
+            <div id="all-container" class="items-container">
+                <div class="data-section">
+                    <h3>Users:</h3>
+                    <div id="all-users"></div>
+                </div>
+                <div class="data-section">
+                    <h3>Posts:</h3>
+                    <div id="all-posts"></div>
+                </div>
+                <div class="data-section">
+                    <h3>Photos:</h3>
+                    <div id="all-photos"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Error Handling Examples -->
+        <section class="example-section">
+            <h2>5. Comprehensive Error Handling</h2>
+            
+            <div class="error-grid">
+                <div class="error-card">
+                    <h3>Network Error</h3>
+                    <button id="network-error-btn" class="btn error-btn">Simulate Network Failure</button>
+                    <div id="network-error-container" class="items-container">
+                        <div id="network-error-message" class="error-message hidden"></div>
+                    </div>
+                </div>
+                
+                <div class="error-card">
+                    <h3>404 Not Found</h3>
+                    <button id="notfound-error-btn" class="btn error-btn">Load Non-existent Data</button>
+                    <div id="notfound-error-container" class="items-container">
+                        <div id="notfound-error-message" class="error-message hidden"></div>
+                    </div>
+                </div>
+                
+                <div class="error-card">
+                    <h3>500 Server Error</h3>
+                    <button id="server-error-btn" class="btn error-btn">Simulate Server Error</button>
+                    <div id="server-error-container" class="items-container">
+                        <div id="server-error-message" class="error-message hidden"></div>
+                    </div>
+                </div>
+                
+                <div class="error-card">
+                    <h3>Timeout Error</h3>
+                    <button id="timeout-error-btn" class="btn error-btn">Simulate Timeout</button>
+                    <div id="timeout-error-container" class="items-container">
+                        <div id="timeout-error-message" class="error-message hidden"></div>
+                    </div>
+                </div>
+                
+                <div class="error-card">
+                    <h3>Invalid JSON Response</h3>
+                    <button id="json-error-btn" class="btn error-btn">Handle Malformed JSON</button>
+                    <div id="json-error-container" class="items-container">
+                        <div id="json-error-message" class="error-message hidden"></div>
+                    </div>
+                </div>
+                
+                <div class="error-card">
+                    <h3>Rate Limiting</h3>
+                    <button id="rate-limit-btn" class="btn error-btn">Simulate Rate Limit</button>
+                    <div id="rate-limit-container" class="items-container">
+                        <div id="rate-limit-message" class="error-message hidden"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="error-info">
+                <h3>Error Handling Best Practices:</h3>
+                <ul>
+                    <li>Always use try/catch blocks with async/await</li>
+                    <li>Differentiate between network, HTTP, and parsing errors</li>
+                    <li>Provide user-friendly error messages</li>
+                    <li>Log errors appropriately for debugging</li>
+                    <li>Implement retry mechanisms for transient errors</li>
+                    <li>Show appropriate loading states during error recovery</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
