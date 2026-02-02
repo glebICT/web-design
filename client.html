@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input id="msg" type="text" placeholder="Type a message">
+    <button onclick="sendMsg()">Send</button>
+    <div id="output"></div>
+    <script>
+        const ws = new WebSocket("ws://localhost:8765");
+        const output = document.getElementById("output");
+
+        ws.onopen = () => output.innerHTML += "<p>Connected!</p>";
+        ws.onmessage = (event) => output.innerHTML += `<p>Server: ${event.data}</p>`;
+        ws.onerror = (error) => console.error("Error:", error);
+
+        function sendMsg() {
+            const input = document.getElementById("msg");
+            ws.send(input.value);
+            output.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+        }
+    </script>
+</body>
+</html>
