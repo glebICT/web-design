@@ -8,7 +8,7 @@ ball = {"x": 400, "y": 300, "vx": 5, "vy": 3}
 players = {}  # socket_id: {"ip": str, "y": 250, "score": 0}
 clients = []  # list of active websocket connections
 
-async def handle_client(websocket, path):
+async def handle_client(websocket, path):  # ← FIXED: Added 'path' parameter
     player_id = str(uuid.uuid4())[:8]
     client_ip = websocket.remote_address[0]  # Get client IP
     
@@ -44,7 +44,7 @@ async def broadcast_state(state):
     for client in disconnected:
         clients.remove(client)
 
-async def game_loop():  # ← FIXED: Now ASYNC
+async def game_loop():  # ASYNC - no threading issues
     while True:
         # Ball physics
         global ball
@@ -75,10 +75,10 @@ async def game_loop():  # ← FIXED: Now ASYNC
         # Broadcast state
         state = {"ball": ball, "players": players}
         asyncio.create_task(broadcast_state(state))
-        await asyncio.sleep(1/60)  # ← FIXED: Proper async sleep
+        await asyncio.sleep(1/60)  # ~60 FPS
 
 async def main():
-    # Start game loop in main event loop (NO to_thread!)
+    # Start game loop in main event loop
     game_task = asyncio.create_task(game_loop())
     
     # Start WebSocket server

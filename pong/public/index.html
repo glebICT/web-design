@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pong Multiplayer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="canvas" width="800" height="600"></canvas>
+  
+  <div id="ui">
+    <div id="info">Use WASD or Arrows</div>
+    <div id="server-ip">
+      <input id="serverInput" type="text" placeholder="192.168.1.100:8765">
+      <button id="connectBtn" onclick="connect()">Connect</button>
+    </div>
+  </div>
+  
+  <div id="connect" class="hidden">
+    <h2>Enter Server IP</h2>
+    <input id="serverInputConnect" type="text" placeholder="192.168.1.100:8765">
+    <br><button onclick="connectFromConnect()">Connect</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
