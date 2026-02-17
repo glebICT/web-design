@@ -31,7 +31,20 @@ async def handle_client(websocket, path):
             clients.remove(websocket)
         print(f"Player {player_id} disconnected")
 
-def game_loop():
+async def broadcast_state(state):
+    message = json.dumps(state)
+    disconnected = []
+    for client in clients[:]:  # Copy list to avoid modification during iteration
+        try:
+            await client.send(message)
+        except websockets.ConnectionClosed:
+            disconnected.append(client)
+    
+    # Clean up disconnected clients
+    for client in disconnected:
+        clients.remove(client)
+
+async def game_loop():  # ← FIXED: Now ASYNC
     while True:
         # Ball physics
         global ball
@@ -62,29 +75,18 @@ def game_loop():
         # Broadcast state
         state = {"ball": ball, "players": players}
         asyncio.create_task(broadcast_state(state))
-        asyncio.sleep(0.016)  # ~60 FPS
-
-async def broadcast_state(state):
-    message = json.dumps(state)
-    disconnected = []
-    for client in clients[:]:  # Copy list to avoid modification during iteration
-        try:
-            await client.send(message)
-        except websockets.ConnectionClosed:
-            disconnected.append(client)
-    
-    # Clean up disconnected clients
-    for client in disconnected:
-        clients.remove(client)
+        await asyncio.sleep(1/60)  # ← FIXED: Proper async sleep
 
 async def main():
-    # Start game loop in background
-    asyncio.create_task(asyncio.to_thread(game_loop))
+    # Start game loop in main event loop (NO to_thread!)
+    game_task = asyncio.create_task(game_loop())
     
     # Start WebSocket server
     server = await websockets.serve(handle_client, "0.0.0.0", 8765)
     print("Server running on ws://0.0.0.0:8765")
-    await server.wait_closed()
+    
+    # Wait for both to finish
+    await asyncio.gather(game_task, server.wait_closed())
 
 if __name__ == "__main__":
     asyncio.run(main())
