@@ -23,20 +23,25 @@
                 top: 10px;
                 right: 10px;
             }
+            #serverInput{
+                width: 150px; padding: 5px
+            }
         </style>
     </head>
     <body>
+        <header>
+            <div id="info">Connect to ws://YOUR_SERVER_IP:8765</div>
+            <div id="server-ip">
+                <input
+                    id="serverInput"
+                    type="text"
+                    placeholder="192.168.2.126:8765"
+                />
+                <button onclick="connect()">Connect</button>
+            </div>
+        </header>
         <canvas id="canvas" width="800" height="600"></canvas>
-        <div id="info">Connect to ws://YOUR_SERVER_IP:8765</div>
-        <div id="server-ip">
-            <input
-                id="serverInput"
-                type="text"
-                placeholder="192.168.2.126:8765"
-                style="width: 150px; padding: 5px"
-            />
-            <button onclick="connect()">Connect</button>
-        </div>
+        
 
         <script>
             const canvas = document.getElementById("canvas");
@@ -57,11 +62,12 @@
             function connect() {
                 const server = serverInput.value || "192.168.2.126:8765";
                 if (ws) ws.close();
-
+                document.getElementsByTagName("header")[0].style.display = 'none'
                 info.textContent = `Connecting to ws://${server}...`;
                 ws = new WebSocket(`ws://${server}`);
 
                 ws.onopen = () => {
+                    
                     info.textContent = "Connected! ↑↓ or WASD to move";
                     connected = true;
                     update();
