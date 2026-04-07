@@ -101,36 +101,14 @@
                         ctx.fillStyle = "#0f0";
                         ctx.fillRect(paddleX, player.y - 25, 10, 50);
 
-                        // Draw emoji at correct position
-                        if (player.emoji_x && player.emoji_y) {
-                            ctx.font = "24px Arial";
-                            ctx.textAlign = "center";
-                            ctx.fillStyle = "#ff0"; // Yellow emoji
-                            console.log(1, player.emoji);
-                            ctx.fillText(
-                                player.emoji,
-                                player.emoji_x,
-                                player.emoji_y + 8,
-                            );
-                            ctx.textAlign = "left"; // Reset alignment
-                        }
-
-                        // Player info (score only, no IP)
+                        // Player info (score only)
                         ctx.fillStyle = "#fff";
                         ctx.font = "16px Arial";
                         if (player.side === "left") {
-                            ctx.fillText(
-                                `${player.emoji} Score: ${player.score}`,
-                                20,
-                                30,
-                            );
+                            ctx.fillText(`Score: ${player.score}`, 20, 30);
                         } else if (player.side === "right") {
                             ctx.textAlign = "right";
-                            ctx.fillText(
-                                `${player.emoji} Score: ${player.score}`,
-                                780,
-                                30,
-                            );
+                            ctx.fillText(`Score: ${player.score}`, 780, 30);
                             ctx.textAlign = "left";
                         }
                     });
