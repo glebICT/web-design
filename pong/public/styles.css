@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: system-ui, sans-serif;
   background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
   color: #fff;
   overflow: hidden;
@@ -74,6 +74,16 @@ input[type="text"] {
   width: 180px;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+}
+
+input[type="color"] {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #333;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 4px;
+  cursor: pointer;
 }
 
 input[type="text"]:focus {

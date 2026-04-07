@@ -1,121 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Python WebSocket Pong</title>
-  <style>
-    body { margin: 0; background: #000; color: #fff; font-family: Arial; }
-    canvas { display: block; }
-    #info { position: absolute; top: 10px; left: 10px; font-size: 14px; }
-    #server-ip { position: absolute; top: 10px; right: 10px; }
-  </style>
-</head>
-<body>
-  <canvas id="canvas" width="800" height="600"></canvas>
-  <div id="info">Connect to ws://YOUR_SERVER_IP:8765</div>
-  <div id="server-ip">
-    <input id="serverInput" type="text" placeholder="192.168.1.100:8765" style="width: 150px; padding: 5px;">
-    <button onclick="connect()">Connect</button>
-  </div>
-  
-  <script>
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const info = document.getElementById('info');
-    const serverInput = document.getElementById('serverInput');
-    
-    let ws = null;
-    let myY = 250;
-    const keys = {};
-    let lastSent = 0;
-    let connected = false;
-
-    // Input handling
-    window.addEventListener('keydown', e => keys[e.key] = true);
-    window.addEventListener('keyup', e => keys[e.key] = false);
-
-    function connect() {
-      const server = serverInput.value || 'localhost:8765';
-      if (ws) ws.close();
-      
-      info.textContent = `Connecting to ws://${server}...`;
-      ws = new WebSocket(`ws://${server}`);
-      
-      ws.onopen = () => {
-        info.textContent = 'Connected! ↑↓ or WASD to move';
-        connected = true;
-        update();
-      };
-      
-      ws.onmessage = (event) => {
-        const state = JSON.parse(event.data);
+    <head>
+        <title>Python WebSocket Pong</title>
+        <style>
+            body {
+                margin: 0;
+                background: #000;
+                color: #fff;
+                font-family: Arial;
+            }
+            canvas {
+                display: block;
+            }
+            #info {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                font-size: 14px;
+            }
+            #server-ip {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+            #serverInput{
+                width: 150px; padding: 5px
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div id="info">Connect to ws://YOUR_SERVER_IP:8765</div>
+            <div id="server-ip">
+                <input
+                    id="serverInput"
+                    type="text"
+                    placeholder="192.168.2.126:8765"
+                />
+                <button onclick="connect()">Connect</button>
+            </div>
+        </header>
+        <canvas id="canvas" width="800" height="600"></canvas>
         
-        ctx.clearRect(0, 0, 800, 600);
-        
-        // Draw ball
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(state.ball.x - 5, state.ball.y - 5, 10, 10);
-        
-        // Draw center line
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([10, 10]);
-        ctx.beginPath();
-        ctx.moveTo(400, 0);
-        ctx.lineTo(400, 600);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        
-        // Draw players
-        Object.entries(state.players).forEach(([id, player], index) => {
-          const x = index === 0 ? 10 : 780;  // Left/Right paddle
-          ctx.fillStyle = '#0f0';
-          ctx.fillRect(x, player.y - 25, 10, 50);
-          
-          // Player info
-          ctx.fillStyle = '#fff';
-          ctx.font = '12px Arial';
-          ctx.fillText(`${player.ip.slice(0,8)}...`, x + 15, player.y);
-          ctx.fillText(`Score: ${player.score}`, x + 15, 30);
-        });
-      };
-      
-      ws.onerror = () => {
-        info.textContent = 'Connection failed! Check IP/port/firewall';
-      };
-      
-      ws.onclose = () => {
-        info.textContent = 'Disconnected. Click Connect to retry';
-        connected = false;
-      };
-    }
 
-    function update() {
-      if (!connected) {
-        requestAnimationFrame(update);
-        return;
-      }
-      
-      // Movement
-      if (keys['ArrowUp'] || keys['w'] || keys['W']) myY = Math.max(0, myY - 6);
-      if (keys['ArrowDown'] || keys['s'] || keys['S']) myY = Math.min(550, myY + 6);
-      
-      // Rate limited send (20fps max)
-      const now = Date.now();
-      if (now - lastSent > 50) {
-        ws.send(JSON.stringify({ y: myY }));
-        lastSent = now;
-      }
-      
-      requestAnimationFrame(update);
-    }
+        <script>
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            const info = document.getElementById("info");
+            const serverInput = document.getElementById("serverInput");
 
-    // Auto-connect on Enter
-    serverInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') connect();
-    });
+            let ws = null;
+            let myY = 250;
+            const keys = {};
+            let lastSent = 0;
+            let connected = false;
 
-    // Try localhost first
-    serverInput.value = 'localhost:8765';
-  </script>
-</body>
+            // Input handling
+            window.addEventListener("keydown", (e) => (keys[e.key] = true));
+            window.addEventListener("keyup", (e) => (keys[e.key] = false));
+
+            function connect() {
+                const server = serverInput.value || "192.168.2.126:8765";
+                if (ws) ws.close();
+                document.getElementsByTagName("header")[0].style.display = 'none'
+                info.textContent = `Connecting to ws://${server}...`;
+                ws = new WebSocket(`ws://${server}`);
+
+                ws.onopen = () => {
+                    
+                    info.textContent = "Connected! ↑↓ or WASD to move";
+                    connected = true;
+                    update();
+                };
+
+                ws.onmessage = (event) => {
+                    const state = JSON.parse(event.data);
+
+                    ctx.clearRect(0, 0, 800, 600);
+
+                    // Draw ball
+                    ctx.fillStyle = "#fff";
+                    ctx.fillRect(state.ball.x - 5, state.ball.y - 5, 10, 10);
+
+                    // Draw center line
+                    ctx.strokeStyle = "#333";
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([10, 10]);
+                    ctx.beginPath();
+                    ctx.moveTo(400, 0);
+                    ctx.lineTo(400, 600);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    // Draw players
+                    Object.entries(state.players).forEach(([id, player]) => {
+                        // Use side-aware paddle positioning
+                        const paddleX = player.side === "left" ? 10 : 780;
+
+                        // Draw paddle
+                        ctx.fillStyle = "#0f0";
+                        ctx.fillRect(paddleX, player.y - 25, 10, 50);
+
+                        // Draw emoji at correct position
+                        if (player.emoji_x && player.emoji_y) {
+                            ctx.font = "24px Arial";
+                            ctx.textAlign = "center";
+                            ctx.fillStyle = "#ff0"; // Yellow emoji
+                            console.log(1, player.emoji);
+                            ctx.fillText(
+                                player.emoji,
+                                player.emoji_x,
+                                player.emoji_y + 8,
+                            );
+                            ctx.textAlign = "left"; // Reset alignment
+                        }
+
+                        // Player info (score only, no IP)
+                        ctx.fillStyle = "#fff";
+                        ctx.font = "16px Arial";
+                        if (player.side === "left") {
+                            ctx.fillText(
+                                `${player.emoji} Score: ${player.score}`,
+                                20,
+                                30,
+                            );
+                        } else if (player.side === "right") {
+                            ctx.textAlign = "right";
+                            ctx.fillText(
+                                `${player.emoji} Score: ${player.score}`,
+                                780,
+                                30,
+                            );
+                            ctx.textAlign = "left";
+                        }
+                    });
+                };
+
+                ws.onerror = () => {
+                    info.textContent =
+                        "Connection failed! Check IP/port/firewall";
+                };
+
+                ws.onclose = () => {
+                    info.textContent = "Disconnected. Click Connect to retry";
+                    connected = false;
+                };
+            }
+
+            function update() {
+                if (!connected) {
+                    requestAnimationFrame(update);
+                    return;
+                }
+
+                // Movement
+                if (keys["ArrowUp"] || keys["w"] || keys["W"])
+                    myY = Math.max(0, myY - 6);
+                if (keys["ArrowDown"] || keys["s"] || keys["S"])
+                    myY = Math.min(550, myY + 6);
+
+                // Rate limited send (20fps max)
+                const now = Date.now();
+                if (now - lastSent > 50) {
+                    ws.send(JSON.stringify({ y: myY }));
+                    lastSent = now;
+                }
+
+                requestAnimationFrame(update);
+            }
+
+            // Auto-connect on Enter
+            serverInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") connect();
+            });
+
+            // Pre-fill with your server IP
+            serverInput.value = "192.168.2.126:8765";
+        </script>
+    </body>
 </html>
