@@ -70,12 +70,6 @@
           const x = index === 0 ? 10 : 780;  // Left/Right paddle
           ctx.fillStyle = '#0f0';
           ctx.fillRect(x, player.y - 25, 10, 50);
-          
-          // Player info
-          ctx.fillStyle = '#fff';
-          ctx.font = '12px Arial';
-          ctx.fillText(`${player.ip.slice(0,8)}...`, x + 15, player.y);
-          ctx.fillText(`Score: ${player.score}`, x + 15, 30);
         });
       };
       
